@@ -63,7 +63,7 @@ and infrastructure provisioning based on high-level service description**
 
 ## Specific Goals
 
-* **Define the project requirements from a brief high level description and some follow up questions**
+* **Define the project requirements from a brief high level description and some follow-up questions**
   * Modify [GPTPilot](https://github.com/Pythagora-io/gpt-pilot) to refine the requirements and create artifacts,
   like user stories and use cases.
 * **Use a Large Language Model conversational agent to create a low level AWS architecture design using the requirements as input**

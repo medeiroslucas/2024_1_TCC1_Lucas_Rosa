@@ -1,0 +1,91 @@
+**IMPORTANT**
+You must respond with ONLY the JSON object, with NO additional text or explanation.
+
+Here is the schema for the expected JSON object:
+```json
+{
+   "definitions":[
+      {
+         "name":"project_architecture",
+         "description":"Get architecture and the list of resources dependencies required for the project.",
+         "parameters":{
+            "type":"object",
+            "properties":{
+               "architecture":{
+                  "type":"string",
+                  "description":"Detailed description of the architecture of the application explaining how the different AWS resources will communicate."
+               },
+               "aws_resources":{
+                  "type":"array",
+                  "description":"List of AWS resources required to build and run the app.",
+                  "items":{
+                     "type":"object",
+                     "properties":{
+                        "name":{
+                           "type":"string",
+                           "description":"Name of the AWS resource."
+                        },
+                        "description":{
+                           "type":"string",
+                           "description":"One-line description of the resource."
+                        },
+                        "usage":{
+                           "type":"string",
+                           "description":"How the resource will be used in the context of the project. For example, 'Amazon DynamoDB will store all the user data'"
+                        }
+                     },
+                     "required":[
+                        "name",
+                        "description"
+                     ]
+                  }
+               },
+               "resources_dependencies":{
+                  "type":"array",
+                  "description":"List of dependencies between the chosen AWS resources.",
+                  "items":{
+                     "type":"object",
+                     "properties":{
+                        "name":{
+                           "type":"string",
+                           "description":"Name of the upstream AWS resource"
+                        },
+                        "dependencies":{
+                           "type":"array",
+                           "description":"All the AWS resources that are dependencies of the upstream resource and how they are related",
+                           "items":{
+                              "type":"object",
+                              "properties":{
+                                 "resource":{
+                                    "type":"string",
+                                    "description":"Name of the downstream resources called by the upstream resource"
+                                 },
+                                 "description":{
+                                    "type":"string",
+                                    "description":"What is the purpose of the upstream resource use this downstream resource. For example, 'The lambda function will call dynamodb to save the user data'"
+                                 }
+                              },
+                              "required":[
+                                 "resource",
+                                 "description"
+                              ]
+                           }
+                        }
+                     },
+                     "required":[
+                        "name",
+                        "dependencies"
+                     ]
+                  }
+               }
+            },
+            "required":[
+               "architecture",
+               "aws_resources",
+               "resources_dependencies"
+            ]
+         }
+      }
+   ]
+}
+```

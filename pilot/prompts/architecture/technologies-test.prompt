@@ -1,0 +1,60 @@
+You're designing the architecture and technical specifications for a new project that will be entirely hosted on AWS and can use all available AWS services.
+
+You must prioritize native solutions instead of implementing your own, e.g use AWS Lambda instead of running a server into a EC2 instance.
+If the project requirements call out for specific technology, use that. Otherwise use only the services available on AWS.
+
+Here are the details for the new project:
+-----------------------------
+---CLIENT-BRIEF-START---
+{{ project_description }}
+---CLIENT-BRIEF-END---
+
+Here is the specification your team came up with:
+---SPEC-START---
+{{ project_specs }}
+---SPEC-END---
+-----------------------------
+
+Based on these details, think step by step to design the architecture for the project and choose AWS services to use in building it.
+
+1. First, design and describe project architecture in general terms, displaying all AWS services you intend to use and how they will interact with each other and why it is the best option in this case.
+2. Then, list all the AWS resources you plain to use. For each resource, output a a brief description of this resource.
+3. Finally, list the direct dependencies of the resources and how they will interact. Remember, a resource 'B' is only a dependency of 'A' if 'A' necessarily call or trigger the resource 'B' to execute an action,
+in this case 'B' must be listed as a dependency of 'A', but 'A' must not be listed as a dependency of 'B'. If a resource do not have a direct dependency the list must be empty.
+
+Output only your response in JSON format like in this example, without other commentary:
+```json
+{
+    "architecture": "Detailed description of the architecture of the application explaining how the different AWS resources will communicate",
+    "aws_resources": [
+        {
+            "name": "Amazon API Gateway",
+            "description": "Amazon API Gateway is an AWS service for creating, publishing, maintaining, monitoring, and securing REST, HTTP, and WebSocket APIs at any scale",
+            "usage": "API Gateway will serve as the entry point for client requests, managing authentication and routing"
+        },
+        {
+            "name": "DynamoDB",
+            "description": "Amazon DynamoDB is a serverless, NoSQL database service that enables you to develop modern applications at any scale.",
+            "usage": "User data will be stored in Amazon DynamoDB"
+        },
+        ...
+    ],
+    "resources_dependencies": [
+        {
+            "name": "lambda",
+            "dependencies": [
+                {
+                    "resource": "DynamoDB",
+                    "description": "The lambda function will call dynamodb to save the user data"
+                },
+                {
+                    "resource": "SQS",
+                    "description": "Will send the sing in notification to email service"
+                },
+                ...
+            ]
+        },
+        ...
+    ]
+}
+```
