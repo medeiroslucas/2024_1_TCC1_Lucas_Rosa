@@ -38,7 +38,7 @@ class SpecWriter(Agent):
         conversational_agent: ConversationalAgent = (ConversationAgentProvider.
                                                      get_conversational_agent(self.role, self.role_description))
 
-        conversational_agent.append_prompt_to_messages('spec_writer/ask_questions.prompt')
+        conversational_agent.append_prompt_to_messages('spec_writer/ask_questions_v2.prompt')
         user_response = initial_description
 
         while True:

@@ -1,4 +1,5 @@
 import platform
+from typing import Dict
 
 from helpers.agents.agent import Agent
 from helpers.agents.conversational_agent import ConversationalAgent
@@ -20,11 +21,11 @@ class Architect(Agent):
         conversational_agent: ConversationalAgent = (ConversationAgentProvider.
                                                      get_conversational_agent(self.role, self.role_description))
 
-        conversational_agent.append_prompt_to_messages('architecture/technologies-test.prompt',
+        conversational_agent.append_prompt_to_messages('architecture/technologies_v2.prompt',
                                                        {'project_description': project_description,
                                                         'project_specs': specs})
 
-        conversational_agent.append_prompt_to_messages("schemas/architecture_json_schema.prompt")
+        # conversational_agent.append_prompt_to_messages("schemas/architecture_json_schema.prompt")
 
         llm_response = conversational_agent.send_messages()
 
