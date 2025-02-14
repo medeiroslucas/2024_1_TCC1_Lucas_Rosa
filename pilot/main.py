@@ -1,4 +1,11 @@
 # main.py
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    raise RuntimeError('Python environment for GPT Pilot is not completely set up: required package "python-dotenv" is missing.') from None
+
+load_dotenv()
+
 import traceback
 
 from helpers.agents.architect import Architect
@@ -7,19 +14,12 @@ from helpers.agents.tech_lead import TechLead
 from helpers.agents.technical_writer import TechnicalWriter
 from prompts.prompts import ask_user
 
-try:
-    from dotenv import load_dotenv
-except ImportError:
-    raise RuntimeError('Python environment for GPT Pilot is not completely set up: required package "python-dotenv" is missing.') from None
-
 from utils.style import color_red
 from helpers.project import Project
 from helpers.agents.product_owner import ProductOwner
 from helpers.agents.spec_writer import SpecWriter
 
 from helpers.exceptions import ApiException, TokenLimitError
-
-load_dotenv()
 
 
 def get_product_owner() -> ProductOwner:

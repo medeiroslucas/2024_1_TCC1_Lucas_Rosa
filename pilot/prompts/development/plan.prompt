@@ -14,6 +14,10 @@ The architecture is divided into CDK stacks that will be user to build this appl
 ----- ARCHITECTURE -----
 {{ architecture }}
 ----- END ARCHITECTURE -----
+----- USE CASES -----
+{{ use_cases }}
+----- END USE CASES -----
+
 
 Before we go into the coding part, I want you to split the development of each CDK stack into smaller tasks so that it is easier to develop, debug and make the application work.
 
@@ -69,18 +73,10 @@ Every task must have a clear and very detailed description (minimum of 4 sentenc
 Here is an example of good and bad task descriptions:
 
 **bad task**
-```json
-{
-    "description": "Create a CDK stack for an S3 bucket"
-}
-```
+Create a CDK stack for an S3 bucket
 
 **good task**
-```json
-{
-    "description": "In 'cdk_stack.py', create a new CDK stack class 'MyS3Stack'. In this stack, define an S3 bucket with versioning enabled. The bucket should have a lifecycle rule to transition objects to Glacier after 30 days. Add the necessary IAM permissions to allow read/write access from a specific Lambda function."
-}
-```
+In 'cdk_stack.py', create a new CDK stack class 'MyS3Stack'. In this stack, define an S3 bucket with versioning enabled. The bucket should have a lifecycle rule to transition objects to Glacier after 30 days. Add the necessary IAM permissions to allow read/write access from a specific Lambda function.
 
 **Rule #5**
 When creating and naming new files, ensure the file naming (camelCase, kebab-case, underscore_case, etc.) is consistent with the best practices and coding style of the language.

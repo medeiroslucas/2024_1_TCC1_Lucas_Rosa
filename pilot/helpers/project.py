@@ -30,20 +30,20 @@ class Project:
         main_description, high_level_specs = self.product_owner.get_project_description()
 
         architecture = self.architect.get_architecture(main_description, high_level_specs)
+        end_to_end_use_cases = self.architect.get_end_2_end_use_cases()
+        use_cases_diagrams = self.architect.get_use_cases_diagram()
+        architecture_diagram = self.architect.get_architecture_diagram()
+        development_plan = self.tech_lead.get_development_plan(main_description, high_level_specs, architecture, end_to_end_use_cases)
 
         print("**********************************************")
         print(architecture)
-        print("----------------------------------------------")
-
-        development_plan = self.tech_lead.get_development_plan(main_description, high_level_specs, architecture)
-        # self.developer.setup_environment(self.project_name)
-        # self.developer.start_coding(self.project_name,
-        #                             main_description,
-        #                             high_level_specs,
-        #                             architecture,
-        #                             development_plan)
-
-
+        print("###############################################")
+        print(end_to_end_use_cases)
+        print("###############################################")
+        print(use_cases_diagrams)
+        print("###############################################")
+        print(architecture_diagram)
+        print("###############################################")
         print(development_plan)
         print("**********************************************")
         return

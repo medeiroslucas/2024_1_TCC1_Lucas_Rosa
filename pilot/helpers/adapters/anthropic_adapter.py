@@ -1,13 +1,13 @@
-import requests
+from typing import Dict, List
 
-from typing import List, Dict
+import requests
 
 from helpers.adapters.llm_adapter import LlmAdapter
 from helpers.exceptions import ApiException
 from logger.logger import logger
 
 
-class ChatGptAdapter(LlmAdapter):
+class AnthropicAdapter(LlmAdapter):
     API_CONNECT_TIMEOUT = 30
     API_READ_TIMEOUT = 300
     llm_role = "assistant"
@@ -16,31 +16,26 @@ class ChatGptAdapter(LlmAdapter):
 
         self.endpoint = endpoint
         self.model = model
+
         self.headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + api_key
+            'content-Type': 'application/json',
+            'x-api-key': api_key,
+            'anthropic-version': '2023-06-01'
         }
 
     def get_conversation_completion(self,
                                     messages: List[Dict],
                                     temperature: float = 0.7,
-                                    n: int = 1,
+                                    max_output_tokens: int = 8192,
                                     top_p: int = 1,
-                                    presence_penalty: int = 0,
-                                    frequency_penalty: int = 0,
                                     stream: bool = False) -> Dict:
-
-        temperature = 1 if self.model == "o1-mini" else temperature
-
         request_data = {
             'model': self.model,
-            'n': n,
             'temperature': temperature,
             'top_p': top_p,
-            'presence_penalty': presence_penalty,
-            'frequency_penalty': frequency_penalty,
             'messages': messages,
-            'stream': stream
+            'stream': stream,
+            'max_tokens': max_output_tokens
         }
 
         response: requests.Response = self.send_request(request_data)
@@ -54,8 +49,8 @@ class ChatGptAdapter(LlmAdapter):
 
     def send_request(self, request_data: Dict, stream: bool = False) -> requests.Response:
 
-        logger.info(f"Calling ChatGpt using endpoint: {self.endpoint} and model: {self.model}")
-        logger.debug(f"Calling ChatGpt using endpoint: {self.endpoint}, model: {self.model} "
+        logger.info(f"Calling Anthropic using endpoint: {self.endpoint} and model: {self.model}")
+        logger.debug(f"Calling Anthropic using endpoint: {self.endpoint}, model: {self.model} "
                      f"and data request: {request_data}")
 
         return requests.post(
@@ -68,4 +63,4 @@ class ChatGptAdapter(LlmAdapter):
 
     @staticmethod
     def extract_conversation_completion(response_json: Dict) -> Dict:
-        return response_json["choices"][0]["message"]
+        return {"content": response_json["content"][0]["text"]}
