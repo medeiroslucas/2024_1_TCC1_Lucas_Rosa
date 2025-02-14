@@ -1,0 +1,11 @@
+Using the architecture description and use cases, create a detailed **Mermaid diagram** that visualizes the entire AWS architecture. The diagram should include:
+
+- **All CDK Stacks**: Networking Stack, Authentication Stack, Application Stack, Database Stack, Storage Stack, Notification Stack, Search Stack, and Content Delivery Stack.
+- **AWS Resources within each Stack**: Clearly represent all AWS services used in each stack, such as VPCs, Lambda functions, API Gateway, DynamoDB, S3 buckets, etc.
+- **Interactions and Data Flow**: Illustrate how the stacks and their components interact with each other, including data flow and communication paths.
+- **User Interactions**: Show how users interact with the system, including authentication and content delivery.
+- **Security Components**: Include security groups, IAM roles, and any security considerations mentioned.
+- **Optional Components**: Represent any optional services or components specified in the description.
+- **Labels and Icons**: Use appropriate labels for clarity. If possible, include AWS service icons or standard symbols to represent different services.
+
+IMPORTANT. Your output must be only the architecture diagram.

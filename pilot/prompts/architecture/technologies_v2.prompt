@@ -1,0 +1,169 @@
+**Your Task:**
+
+You are designing the architecture and technical specifications for a new project that will be entirely hosted on AWS, utilizing appropriate AWS services. The architecture will be implemented using AWS CDK with Python. Your goal is to create an architecture composed of CDK stacks, where each stack represents a logical grouping of related application components (e.g., networking, databases, authentication), rather than being based on specific use cases.
+
+**Project Details:**
+
+-----------------------------
+**Client Brief:**
+
+{{ project_description }}
+
+**Project Specification:**
+
+{{ project_specs }}
+-----------------------------
+
+**Instructions:**
+
+Based on these details, design the architecture step by step, choosing AWS services that best meet the project requirements.
+
+1. **High-Level Architecture Overview:**
+
+   - **Description:**
+     - Provide a general overview of the proposed architecture.
+     - Explain the overall structure and how it addresses the project needs.
+   - **CDK Stacks List:**
+     - List all the CDK stacks you plan to use.
+   - **Interactions:**
+     - Describe how the stacks will interact with each other.
+   - **Justification:**
+     - Explain why this architecture is the best option for this project.
+
+2. **Detailed CDK Stack Descriptions:**
+
+   For each CDK stack, provide:
+
+   - **Stack Name:**
+     - A clear and descriptive name for the stack.
+   - **Purpose:**
+     - A brief description of the stack's role in the architecture.
+   - **AWS Resources:**
+     - List the AWS services and resources that will be included in this stack.
+     - Include any relevant configurations or features.
+   - **Interactions:**
+     - Describe how this stack interacts with other stacks or AWS services.
+   - **Rationale:**
+     - Justify the selection of AWS services for this stack, explaining how they meet the project requirements.
+
+3. **Assumptions and Considerations:**
+
+   - **Assumptions:**
+     - Note any assumptions you've made in your architectural design.
+   - **Constraints:**
+     - Mention any constraints that influenced your design decisions.
+   - **Scalability and Security:**
+     - Briefly address how the architecture accommodates scalability and security needs.
+
+**Formatting Guidelines:**
+
+- Use clear headings and subheadings to organize your output.
+- Present information in bullet points or numbered lists where appropriate.
+- Be concise but provide sufficient detail for clarity.
+- Ensure the architecture can be easily translated into a diagram.
+- Avoid technical implementation details; focus on architectural design.
+
+**Example:**
+
+---
+
+**1. High-Level Architecture Overview**
+
+The proposed architecture is a scalable web application hosted on AWS, following a multi-tier design that separates concerns across different layers. The architecture comprises the following CDK stacks:
+
+- **Networking Stack**
+- **Database Stack**
+- **Application Stack**
+- **Authentication Stack**
+- **Storage Stack**
+
+**Interactions:**
+
+- The **Networking Stack** provides the foundational network infrastructure used by all other stacks.
+- The **Application Stack** hosts the backend services and interfaces with the **Database Stack** for data persistence.
+- The **Authentication Stack** manages user authentication and interacts with the **Application Stack** to secure API endpoints.
+- The **Storage Stack** handles static assets and is accessed by the **Application Stack** and frontend applications.
+
+**Justification:**
+
+This architecture promotes separation of concerns, enhances scalability, and improves manageability by logically grouping resources. It leverages AWS managed services to reduce operational overhead and ensures that each component can scale independently.
+
+---
+
+**2. Detailed CDK Stack Descriptions**
+
+**Networking Stack**
+
+- **Purpose:** Establishes the network infrastructure for the application.
+- **AWS Resources:**
+  - **Amazon VPC:** Provides isolated network space.
+  - **Public and Private Subnets:** Segregate resources based on accessibility.
+  - **Internet Gateway and NAT Gateways:** Enable internet access for public and private resources.
+  - **Security Groups and Network ACLs:** Control inbound and outbound traffic.
+- **Interactions:**
+  - Used by all other stacks for deploying resources within the VPC.
+- **Rationale:**
+  - A dedicated networking stack allows centralized management of network resources and enhances security.
+
+**Database Stack**
+
+- **Purpose:** Manages data persistence for the application.
+- **AWS Resources:**
+  - **Amazon RDS (PostgreSQL):** Relational database for storing application data.
+  - **DB Subnet Group:** Uses private subnets from the Networking Stack.
+  - **Security Group:** Allows database access only from the Application Stack.
+- **Interactions:**
+  - The Application Stack connects to the database for CRUD operations.
+- **Rationale:**
+  - Amazon RDS provides a scalable and managed database solution, reducing administrative overhead.
+
+**Application Stack**
+
+- **Purpose:** Hosts the backend API and application logic.
+- **AWS Resources:**
+  - **AWS Lambda Functions:** Serverless compute for handling API requests.
+  - **Amazon API Gateway:** Exposes RESTful API endpoints.
+  - **AWS AppSync (optional):** For GraphQL APIs if required.
+  - **IAM Roles:** Define permissions for accessing other AWS services.
+- **Interactions:**
+  - Communicates with the Database Stack for data operations.
+  - Validates authentication tokens from the Authentication Stack.
+- **Rationale:**
+  - Serverless services offer scalability and cost-efficiency for variable workloads.
+
+**Authentication Stack**
+
+- **Purpose:** Manages user authentication and authorization.
+- **AWS Resources:**
+  - **Amazon Cognito User Pools:** Handles user sign-up, sign-in, and authentication.
+  - **Amazon Cognito Identity Pools:** Provides temporary AWS credentials for accessing resources.
+- **Interactions:**
+  - The Application Stack uses Cognito for securing API endpoints.
+- **Rationale:**
+  - Cognito simplifies user management and integrates seamlessly with other AWS services.
+
+**Storage Stack**
+
+- **Purpose:** Stores static assets and handles file uploads/downloads.
+- **AWS Resources:**
+  - **Amazon S3 Buckets:** Store static content and user-uploaded files.
+  - **Amazon CloudFront:** Distributes content globally with low latency.
+- **Interactions:**
+  - The Application Stack accesses S3 for storing and retrieving files.
+  - Frontend applications fetch static assets via CloudFront.
+- **Rationale:**
+  - S3 and CloudFront provide a reliable and scalable solution for content storage and delivery.
+
+---
+
+**3. Assumptions and Considerations**
+
+- **Assumptions:**
+  - The application requires user authentication and data persistence.
+  - Workloads are expected to be variable, benefiting from serverless solutions.
+- **Constraints:**
+  - Must use AWS services exclusively.
+  - Needs to be scalable to handle increasing user demand.
+- **Scalability and Security:**
+  - AWS managed services like Lambda and RDS offer automatic scaling.
+  - Security is enforced through VPC configurations, security groups, and IAM roles.

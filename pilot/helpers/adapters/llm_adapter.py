@@ -5,6 +5,7 @@ import requests
 
 
 class LlmAdapter(ABC):
+    llm_role: str
 
     @abstractmethod
     def send_request(self, args, **kwarg) -> requests.Response:

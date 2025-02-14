@@ -2,11 +2,12 @@ from helpers.agents.spec_writer import SpecWriter
 from helpers.agents.agent import Agent
 from logger.logger import logger
 from prompts.prompts import ask_user
+from const.roles import Roles
 
 
 class ProductOwner(Agent):
     def __init__(self, spec_writer: SpecWriter):
-        super().__init__('product_owner')
+        super().__init__(Roles.PRODUCT_OWNER.value)
         self.spec_writer = spec_writer
 
     def get_project_description(self) -> (str, str):

@@ -4,6 +4,8 @@ from utils.style import color_green_bold, color_yellow_bold, color_white_bold
 from prompts.prompts import ask_user
 from const.messages import AFFIRMATIVE_ANSWERS
 from helpers.provider.conversation_agent_provider import ConversationAgentProvider
+from const.roles import Roles
+from logger.logger import logger
 
 
 INITIAL_PROJECT_HOWTO_URL = "https://github.com/Pythagora-io/gpt-pilot/wiki/How-to-write-a-good-initial-project-description"
@@ -17,7 +19,7 @@ SHORT_DESCRIPTION_MESSAGE = (
 
 class SpecWriter(Agent):
     def __init__(self):
-        super().__init__('spec_writer')
+        super().__init__(Roles.SPEC_WRITER.value)
 
     def create_spec(self, initial_description):
         if self.is_initial_description_enough(initial_description):
@@ -38,7 +40,7 @@ class SpecWriter(Agent):
         conversational_agent: ConversationalAgent = (ConversationAgentProvider.
                                                      get_conversational_agent(self.role, self.role_description))
 
-        conversational_agent.append_prompt_to_messages('spec_writer/ask_questions.prompt')
+        conversational_agent.append_prompt_to_messages('spec_writer/ask_questions_v2.prompt')
         user_response = initial_description
 
         while True:
@@ -48,7 +50,9 @@ class SpecWriter(Agent):
                 continue
 
             llm_response = llm_response.strip()
-            if len(llm_response) > 500:
+            logger.info(user_response)
+            logger.info(llm_response)
+            if len(llm_response) > 1000:
                 print(color_white_bold("\n" + llm_response + "\n\n\n"))
                 user_response = ask_user(
                     "Can we proceed with this project description? If so, just press ENTER."

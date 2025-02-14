@@ -12,8 +12,9 @@ class ConversationalAgent:
     def __init__(self, role: str, role_description: str, llm_adapter: LlmAdapter):
         self.role = role
         self.llm_adapter = llm_adapter
+        self.llm_role = llm_adapter.llm_role
         self.log_to_user = True
-        self.append_message({"role": "system", "content": role_description})
+        self.append_message({"role": self.llm_role, "content": role_description})
 
     def append_message(self, message: Dict[str, str]):
         self.messages.append(message)

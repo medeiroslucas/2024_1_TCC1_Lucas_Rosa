@@ -1,15 +1,18 @@
 # main.py
-import traceback
-
-from helpers.agents.architect import Architect
-from helpers.agents.developer import Developer
-from helpers.agents.tech_lead import TechLead
-from helpers.agents.technical_writer import TechnicalWriter
-
 try:
     from dotenv import load_dotenv
 except ImportError:
     raise RuntimeError('Python environment for GPT Pilot is not completely set up: required package "python-dotenv" is missing.') from None
+
+load_dotenv()
+
+import traceback
+
+from helpers.agents.architect import Architect
+# from helpers.agents.developer import Developer
+from helpers.agents.tech_lead import TechLead
+from helpers.agents.technical_writer import TechnicalWriter
+from prompts.prompts import ask_user
 
 from utils.style import color_red
 from helpers.project import Project
@@ -17,8 +20,6 @@ from helpers.agents.product_owner import ProductOwner
 from helpers.agents.spec_writer import SpecWriter
 
 from helpers.exceptions import ApiException, TokenLimitError
-
-load_dotenv()
 
 
 def get_product_owner() -> ProductOwner:
@@ -34,8 +35,8 @@ def get_architect() -> Architect:
     return Architect()
 
 
-def get_developer() -> Developer:
-    return Developer()
+# def get_developer() -> Developer | None:
+#     return None
 
 
 def get_tech_lead() -> TechLead:
@@ -52,13 +53,15 @@ if __name__ == "__main__":
 
     product_owner: ProductOwner = get_product_owner()
     architect: Architect = get_architect()
-    developer: Developer = get_developer()
+    developer = None
     technical_writer: TechnicalWriter = get_technical_writer()
     tech_lead: TechLead = get_tech_lead()
 
     try:
 
-        project: Project = Project(product_owner, architect, developer, technical_writer, tech_lead)
+        project_name = ask_user('What is the project name?')
+
+        project: Project = Project(project_name, product_owner, architect, developer, technical_writer, tech_lead)
         started = project.start()
         print('Thank you for using Cloud Pilot!')
 
