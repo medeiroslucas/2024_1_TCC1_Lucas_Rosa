@@ -26,10 +26,6 @@ class SpecWriter(Agent):
             return initial_description
 
         specs = self.generate_project_specs(initial_description)
-        missing_info = self.review_spec(initial_description, specs)
-        if missing_info:
-            specs += "\nAdditional info/examples:\n" + missing_info
-
         return specs
 
     def generate_project_specs(self, initial_description):
@@ -53,7 +49,8 @@ class SpecWriter(Agent):
             logger.info(user_response)
             logger.info(llm_response)
             if len(llm_response) > 1000:
-                print(color_white_bold("\n" + llm_response + "\n\n\n"))
+                print(f"Len llm response: {len(llm_response)}")
+                print(llm_response)
                 user_response = ask_user(
                     "Can we proceed with this project description? If so, just press ENTER."
                     " Otherwise, please tell me what's missing or what you'd like to add.",

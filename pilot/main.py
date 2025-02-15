@@ -63,7 +63,6 @@ if __name__ == "__main__":
 
         project: Project = Project(project_name, product_owner, architect, developer, technical_writer, tech_lead)
         started = project.start()
-        print('Thank you for using Cloud Pilot!')
 
     except (ApiException, TokenLimitError) as err:
 

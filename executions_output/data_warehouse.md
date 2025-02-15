@@ -2,7 +2,8 @@
 
 ? Describe your app in as much detail as possible.
 
-I want you to create a data warehouse. This data warehouse must centrailize all data from my company, so the system must periodically query my databases and load the data to the warehouse
+**I want you to create a data warehouse. This data warehouse must centrailize all data from my company, so the system must periodically query my databases and load the data to the warehouse**
+
 Your project description seems a bit short. The better you can describe the project, the better GPT Pilot will understand what you'd like to build.
 
 Here are some tips on how to better describe the project: https://github.com/Pythagora-io/gpt-pilot/wiki/How-to-write-a-good-initial-project-description
